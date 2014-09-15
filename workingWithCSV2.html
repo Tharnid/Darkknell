@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <title>Working with .CSV Two</title>
+    </head>
+    <body>
+    <script>
+          
+          //enter D3 code here
+/*          d3.select("body")
+            .append("h1")
+            .text("hello world!");*/
+
+            var h = 100;
+            var w = 400;
+            var ds; // global var for data
+
+            d3.csv("./data/MonthlySales.csv", function (error, data) {
+                if(error)
+                {
+                    console.log(error);
+                } else {
+                    console.log(data)
+                    ds = data;
+                }
+
+                var lineFun = d3.svg.line()
+                  .x(function (d) { return ((d.month-20130001)/3.25); })
+                  .y(function (d) { return h-d.sales; })
+                  .interpolate("linear");
+                
+                var svg = d3.select("body").append("svg").attr({ width:w, height: h});
+                
+                var viz = svg.append("path")
+                  .attr({
+                    d: lineFun(ds),
+                    "stroke": "purple",
+                    "stroke-width": 2,
+                    "fill": "none"
+                });
+            });
+            // 11 minutes in to the working with data video   
+    </script>
+    </body>
+</html>
